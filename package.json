@@ -1,0 +1,2 @@
+{"name":"lookbook-myanmar","private":true,"packageManager":"pnpm@9.15.0","scripts":{"install:all":"pnpm install","dev:backend":"pnpm --dir backend dev","dev:buyer":"pnpm --dir apps/buyer start","dev:seller":"pnpm --dir apps/seller start","dev:admin":"pnpm --dir apps/admin start","db:push":"pnpm --dir backend prisma:push","db:seed":"pnpm --dir backend seed","test:backend":"pnpm --dir backend test","build:buyer":"pnpm --dir apps/buyer eas:build","build:seller":"pnpm --dir apps/seller eas:build","build:admin":"pnpm --dir apps/admin eas:build"}}
+

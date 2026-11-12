@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "LookBook Admin",
+    "slug": "lookbook-admin",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "lookbookadmin",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFF9F4"
+    },
+    "android": {
+      "package": "mm.lookbook.admin",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#F45B69"
+      }
+    }
+  }
+}

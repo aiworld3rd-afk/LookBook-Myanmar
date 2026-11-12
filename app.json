@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "LookBook Buyer",
+    "slug": "lookbook-buyer",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "lookbookbuyer",
+    "icon": "./assets/buyer-logo.png",
+    "splash": {
+      "image": "./assets/buyer-logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFF9F4"
+    },
+    "android": {
+      "package": "mm.lookbook.buyer",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/buyer-logo.png",
+        "backgroundColor": "#F45B69"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "LookBook Seller",
+    "slug": "lookbook-seller",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "lookbookseller",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFF9F4"
+    },
+    "android": {
+      "package": "mm.lookbook.seller",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#F45B69"
+      }
+    }
+  }
+}

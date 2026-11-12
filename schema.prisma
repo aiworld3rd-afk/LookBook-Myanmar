@@ -1,0 +1,22 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+enum Role { BUYER SELLER ADMIN }
+enum SellerStatus { PENDING APPROVED REJECTED SUSPENDED }
+enum OrderStatus { PENDING PAYMENT_REVIEW PAID PROCESSING SHIPPED DELIVERED CANCELLED }
+enum PaymentStatus { PENDING VERIFIED FAILED REFUNDED }
+model User { id String @id @default(cuid()) email String @unique passwordHash String name String role Role createdAt DateTime @default(now()) updatedAt DateTime @updatedAt sellerProfile SellerProfile? buyerAddresses BuyerAddress[] products Product[] orders Order[] reviews Review[] notifications Notification[] auditLogs AuditLog[] cart Cart? }
+model SellerProfile { id String @id @default(cuid()) userId String @unique shopName String status SellerStatus @default(PENDING) phone String? user User @relation(fields:[userId], references:[id], onDelete:Cascade) }
+model BuyerAddress { id String @id @default(cuid()) userId String label String recipient String phone String address String city String township String user User @relation(fields:[userId], references:[id], onDelete:Cascade) orders Order[] }
+model Category { id String @id @default(cuid()) name String nameMy String products Product[] promotions Promotion[] }
+model Product { id String @id @default(cuid()) sellerId String categoryId String name String nameMy String description String price Int discount Int @default(0) stock Int rating Float @default(0) published Boolean @default(false) createdAt DateTime @default(now()) updatedAt DateTime @updatedAt seller User @relation(fields:[sellerId], references:[id]) category Category @relation(fields:[categoryId], references:[id]) images ProductImage[] variants ProductVariant[] cartItems CartItem[] orderItems OrderItem[] reviews Review[] @@index([sellerId,published]) @@index([categoryId,price]) }
+model ProductImage { id String @id @default(cuid()) productId String url String product Product @relation(fields:[productId], references:[id], onDelete:Cascade) }
+model ProductVariant { id String @id @default(cuid()) productId String size String? color String? stock Int product Product @relation(fields:[productId], references:[id], onDelete:Cascade) }
+model Cart { id String @id @default(cuid()) userId String @unique user User @relation(fields:[userId], references:[id], onDelete:Cascade) items CartItem[] }
+model CartItem { id String @id @default(cuid()) cartId String productId String quantity Int cart Cart @relation(fields:[cartId], references:[id], onDelete:Cascade) product Product @relation(fields:[productId], references:[id]) @@unique([cartId,productId]) }
+model Order { id String @id @default(cuid()) buyerId String addressId String status OrderStatus @default(PENDING) total Int trackingNumber String? createdAt DateTime @default(now()) buyer User @relation(fields:[buyerId], references:[id]) address BuyerAddress @relation(fields:[addressId], references:[id]) items OrderItem[] payment Payment? }
+model OrderItem { id String @id @default(cuid()) orderId String productId String quantity Int unitPrice Int order Order @relation(fields:[orderId], references:[id], onDelete:Cascade) product Product @relation(fields:[productId], references:[id]) }
+model Payment { id String @id @default(cuid()) orderId String @unique provider String status PaymentStatus @default(PENDING) providerReference String? proofImageUrl String? submittedAt DateTime? verifiedAt DateTime? verifiedBy String? reviewNote String? order Order @relation(fields:[orderId], references:[id], onDelete:Cascade) @@index([status,provider]) }
+model Review { id String @id @default(cuid()) userId String productId String rating Int comment String? user User @relation(fields:[userId], references:[id]) product Product @relation(fields:[productId], references:[id]) @@unique([userId,productId]) }
+model Notification { id String @id @default(cuid()) userId String title String body String read Boolean @default(false) createdAt DateTime @default(now()) user User @relation(fields:[userId], references:[id], onDelete:Cascade) }
+model Promotion { id String @id @default(cuid()) title String imageUrl String? active Boolean @default(true) categoryId String? category Category? @relation(fields:[categoryId], references:[id]) }
+model AuditLog { id String @id @default(cuid()) userId String? action String entity String entityId String? metadata String? createdAt DateTime @default(now()) user User? @relation(fields:[userId], references:[id]) }
